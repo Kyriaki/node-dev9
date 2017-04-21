@@ -1,0 +1,68 @@
+*** SSH ***
+# afficher le contenu dossier dossier .ssh
+ls -al ~/.ssh
+
+# générer un clé
+ssh-keygen -t rsa -b 4096 -C 'opusidea@gmail.com'
+
+eval "$(ssh-agent -s)"
+=> Agent pid xxxxx
+
+ssh-add ~/.ssh/id_rsa
+=> identity added
+
+# tester
+ssh -T git@github.com
+
+# copier le clé public dans le pasteboard
+pbcopy < ~/.ssh/id_rsa.pub
+
+
+*** Git ***
+# commandes de bases
+git status
+git add
+git commit
+git push
+
+# format des adresses selon une connection au repo en https ou en ssh
+origin https://github.com/cdufour/repository.git
+origin git@github.com:cdufour/repository.git
+
+# changer le remote orgin
+git remote set-url origin git://new.url.here
+
+
+*** Heroku cli **
+# https://devcenter.heroku.com/categories/deployment
+
+# se connecter
+heroku login
+
+# envoyer au serveur une clé publique pour identification ssh
+heroku keys:add
+
+# vérifier la connexion ssh
+ssh -v git@heroku.com => Authentication succeeded
+
+# générer une nouvelle application
+heroku create
+
+# envoyer les fichier depuis github vers heroku pour déploiement
+git push heroku
+
+# ouvrir l'application heroku dans le navigateur par défaut
+heroku open
+
+# cloner une application heroku
+heroku git:clone -a myapp
+
+
+*** Node app ***
+
+# définir le port avec une variable d'environnement
+var port = process.env.PORT || 3000
+app.listen(port);
+
+# définir un script "start" (éxécuter par heroku) dans package.json
+"start": "node server.js"
